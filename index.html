@@ -4,7 +4,6 @@
 <style>
 
     .node {
-        cursor: pointer;
         stroke: #3182bd;
     }
 
@@ -17,12 +16,18 @@
         position: absolute;
         margin: auto;
     }
-    .node text{
-    font-size: 12px;
-    font-weight: normal;
-    fill: #000;
-    stroke-width: 0.1px;
-    text-anchor: middle;
+    .node text {
+        font-size: 12px;
+        font-weight: normal;
+        fill: #000;
+        stroke-width: 0.1px;
+        text-anchor: middle;
+    }
+    svg .node circle{
+        stroke-width: 0;
+    }
+    svg .node  title{
+        stroke-width: 1px;
     }
 </style>
 <body>
@@ -30,11 +35,11 @@
 <script>
 
     var width = window.screen.width;
-    var height = window.screen.height;
+    var height = 1000;
     var root;
     // 模拟物理力排放相连节点的位置
     var force = d3.layout.force()
-        .size([width, height])
+        .size([width - 60, height])
         .on("tick", tick);
 
     var svg = d3.select("body").append("svg")
@@ -60,8 +65,8 @@
         force
             .nodes(nodes)
             .links(links)
-            .linkDistance(300)
-            .charge(-100)
+            .linkDistance(120)
+            .charge(-1000)
             .start();
 
         // Update the links…
@@ -75,10 +80,10 @@
         // 如果数据新的里面有、旧的里面没有那就画到dom里面去
         link.enter().append("line")
             .attr("class", "link")
-            /*.attr("x1", function(d) { return d.source.x; })
+            .attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y; })
             .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });*/
+            .attr("y2", function(d) { return d.target.y; });
 
         // Update the nodes…
         // 绑定节点
@@ -96,12 +101,35 @@
             })
             .on("click", click)
             .call(force.drag)
-            .style("cursor","pointer")
+            .attr('style', function (d) {
+                return `cursor: ${d.url ? 'pointer' : 'default'}`;
+            });
+
+        g.append(function (d) {
+            if(d.url) {
+                const title = document.createElementNS("http://www.w3.org/2000/svg","title");
+                title.appendChild(document.createTextNode(d.url || ''));
+                return title;
+            } else {
+                return document.createTextNode('');
+            }
+
+        });
 
         g.append('circle')
-            .attr("r", function(d) { return 30; })
-            .style("fill", color)
+            .attr("r", function(d) {
+                if(d.children) {
+                    return 40;
+                } else return 30
 
+            })
+            .style("fill", color)
+            .style('box-shadow', function (d) {
+                return `0 0 4px ${color(d)}`
+            })
+            .attr('title', function (d) {
+                return d.url || ''
+            });
 
         g.append('text')
             .text(function (d) {
@@ -135,7 +163,7 @@
                 d.children = d._children;
                 d._children = null;
             }
-            update();
+            if(d.url) window.open(d.url)
         }
     }
 
