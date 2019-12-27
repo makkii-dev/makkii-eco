@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Force-Directed Graph</title>
+<style>
+
+    .node {
+        cursor: pointer;
+        stroke: #3182bd;
+    }
+
+    .link {
+        fill: none;
+        stroke: #9ecae1;
+        stroke-width: 1.5px;
+    }
+    svg{
+        position: absolute;
+        margin: auto;
+    }
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+    var width = window.screen.width;
+    var height = window.screen.height;
+    var root;
+    // 模拟物理力排放相连节点的位置
+    var force = d3.layout.force()
+        .size([width, height])
+        .on("tick", tick);
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+    // 从当前文档选择多个元素
+    var link = svg.selectAll(".link"),
+        node = svg.selectAll(".node");
+    d3.json("demo.json", function(error, json) {
+        if (error) throw error;
+        root = json;
+        update();
+    });
+
+    function update() {
+        // 平坦话嵌套数据
+        var nodes = flatten(root),
+            // 根据给定描述数据， 生成树状节点关系
+            links = d3.layout.tree().links(nodes);
+
+        // Restart the force layout.
+        // 启动一种流体力学形式的布局
+        force
+            .nodes(nodes)
+            .links(links)
+            .linkDistance(300)
+            .charge(-100)
+            .start();
+
+        // Update the links…
+        // 把数据与dom元素进行绑定
+        link = link.data(links, function(d) { return d.target.id; });
+        // Exit any old links.
+        // 如果数据旧的里面有、新的里面没有，那就一除掉
+        link.exit().remove();
+
+        // Enter any new links.
+        // 如果数据新的里面有、旧的里面没有那就画到dom里面去
+        link.enter().append("line")
+            .attr("class", "link")
+            /*.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });*/
+
+        // Update the nodes…
+        // 绑定节点
+        node = node.data(nodes, function(d) { return d.id; }).style("fill", color)
+
+        // Exit any old nodes.
+        node.exit().remove();
+
+        // Enter any new nodes.
+        const g = node.enter()
+            .append('g')
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            })
+            .on("click", click)
+            .call(force.drag)
+            .style("cursor","pointer")
+
+        g.append('circle')
+            .attr("r", function(d) { return 30; })
+            .style("fill", color)
+
+
+        g.append('text')
+            .text(function (d) {
+                return d.name
+            }).style({
+            'font-size': '12px',
+            'font-weight': 'normal'
+        })
+    }
+
+    function tick() {
+        link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
+        node.attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        })
+    }
+
+    // Color leaf nodes orange, and packages white or blue.
+    function color(d) {
+        return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+    }
+
+    // Toggle children on click.
+    function click(d) {
+        if (!d3.event.defaultPrevented) {
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+            } else {
+                d.children = d._children;
+                d._children = null;
+            }
+            update();
+        }
+    }
+
+    // Returns a list of all nodes under the root.
+    // 把嵌套的对象转成对象的数组
+    function flatten(root) {
+        var nodes = [], i = 0;
+        // 递归
+        function recurse(node) {
+            if (node.children) node.children.forEach(recurse);
+            if (!node.id) node.id = ++i;
+            nodes.push(node);
+        }
+
+        recurse(root);
+        return nodes;
+    }
+
+</script>

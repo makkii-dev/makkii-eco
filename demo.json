@@ -1,0 +1,26 @@
+{
+  "name": "flare",
+  "children": [
+    {"name": "DataField", "size": 1759},
+    {"name": "DataSchema", "size": 2165},
+    {"name": "DataSet", "size": 586},
+    {"name": "DataSource", "size": 3331},
+    {"name": "DataTable", "size": 772},
+    {"name": "DataUtil", "size": 3322},
+    {
+      "name": "display",
+      "children": [
+        {"name": "DirtySprite", "size": 8833},
+        {"name": "LineSprite", "size": 1732},
+        {"name": "RectSprite", "size": 3623},
+        {"name": "TextSprite", "size": 10066}
+      ]
+    },
+    {
+      "name": "flex",
+      "children": [
+        {"name": "FlareVis", "size": 4116}
+      ]
+    }
+  ]
+}
