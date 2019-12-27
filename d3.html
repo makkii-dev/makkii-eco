@@ -17,6 +17,13 @@
         position: absolute;
         margin: auto;
     }
+    .node text{
+    font-size: 12px;
+    font-weight: normal;
+    fill: #000;
+    stroke-width: 0.1px;
+    text-anchor: middle;
+    }
 </style>
 <body>
 <script src="//d3js.org/d3.v3.min.js"></script>
@@ -99,10 +106,7 @@
         g.append('text')
             .text(function (d) {
                 return d.name
-            }).style({
-            'font-size': '12px',
-            'font-weight': 'normal'
-        })
+            })
     }
 
     function tick() {
