@@ -1,26 +1,198 @@
 {
-  "name": "flare",
+  "name": "makkii",
   "children": [
-    {"name": "DataField", "size": 1759},
-    {"name": "DataSchema", "size": 2165},
-    {"name": "DataSet", "size": 586},
-    {"name": "DataSource", "size": 3331},
-    {"name": "DataTable", "size": 772},
-    {"name": "DataUtil", "size": 3322},
     {
-      "name": "display",
+      "name": "makkii-js", 
+      "size": 2000,
+      "git": "https://github.com/makkii-dev/makkii-js",
       "children": [
-        {"name": "DirtySprite", "size": 8833},
-        {"name": "LineSprite", "size": 1732},
-        {"name": "RectSprite", "size": 3623},
-        {"name": "TextSprite", "size": 10066}
+        {
+          "name": "makkii-core",
+          "description": "interface",
+          "git": "", 
+          "size": 2000
+        },
+        {
+          "name": "app-aion", 
+          "size": 2000
+        },
+        {
+          "name": "app-btc", 
+          "size": 2000
+        },
+        {
+          "name": "app-eth", 
+          "size": 2000
+        },
+        {
+          "name": "app-ltc", 
+          "size": 2000
+        },
+        {
+          "name": "app-tron", 
+          "size": 2000
+        }
       ]
     },
     {
-      "name": "flex",
+      "name": "makkii-sdk", 
+      "size": 2000,
+      "git": "",
       "children": [
-        {"name": "FlareVis", "size": 4116}
+        {
+          "name": "makkii-sdk/location",
+          "description": "mobile location interface",
+          "size": 2000
+        },
+        {
+          "name": "makkii-sdk/bluetooth",
+          "description": "mobile bluetooth interface",
+          "size": 2000
+        },
+        {
+          "name": "makkii-sdk/nfc",
+          "description": "mobile nfc interface",
+          "size": 2000
+        },
+        {
+          "name": "makkii-sdk/gravity",
+          "description": "mobile gravity interface",
+          "size": 2000
+        },
+        {
+          "name": "makkii-sdk/audio",
+          "description": "mobile audio interface",
+          "size": 2000
+        },
+        {
+          "name": "makkii-sdk/video",
+          "description": "mobile video interface",
+          "size": 2000
+        }
       ]
+    },
+    {
+      "name": "makkii-bridge", 
+      "size": 2000,
+      "children": [
+        {
+          "name": "interface",
+          "description": "dual-way communication between makkii & dapps",
+          "size": 2000     
+        }
+      ]
+    },
+    {
+      "name": "makkii-server", 
+      "size": 2000,
+      "children": [
+        {
+          "name": "version control",
+          "description": "dapps version control",
+          "size": 2000
+        },
+        {
+          "name": "module control",
+          "description": "module control",
+          "size": 2000
+        },
+        {
+          "name": "oauth control",
+          "description": "user oauth control",
+          "size": 2000
+        },
+        {
+          "name": "feedback",
+          "description": "user feedback",
+          "size": 2000
+        },
+        {
+          "name": "analytics",
+          "description": "dapps analytics",
+          "size": 2000
+        },
+        {
+          "name": "build-in services",
+          "description": "makkii build-in services",
+          "size": 2000,
+          "children": [
+            {
+              "name": "coin price",
+              "description": "coin price service",
+              "size": 2000
+            },
+            {
+              "name": "tokens",
+              "description": "tokens listing",
+              "size": 2000
+            },
+            {
+              "name": "promotions",
+              "description": "promotions",
+              "size": 2000
+            }
+          ]
+        },
+        {
+          "name": "build-in third-party services",
+          "description": "makkii build-in services",
+          "size": 2000,
+          "children": [
+            {
+              "name": "pokket",
+              "description": "pokket staking service",
+              "size": 2000
+            },
+            {
+              "name": "kyber network",
+              "description": "dex",
+              "size": 2000
+            },
+            {
+              "name": "media",
+              "description": "media",
+              "size": 2000,
+              "children": [
+                {
+                  "name": "chainnews",
+                  "description": "crypto news provider",
+                  "size": 2000
+                },
+                {
+                  "name": "coinvoice",
+                  "description": "crypto news provider",
+                  "size": 2000
+                },
+                {
+                  "name": "usethebitcoin",
+                  "description": "crypto news provider",
+                  "size": 2000
+                }
+              ]
+            }
+          ]
+        }     
+      ]
+    },
+    {
+      "name": "dapps",
+      "size": 2000,
+      "children": [
+        {
+          "name": "aion staking",
+          "description": "aion staking service",
+          "url": "https://staking.makkii.dev"
+        },
+        {
+          "name": "pokket",
+          "description": "pokket financial service",
+          "url": "https://pokket.com"
+        }
+      ]
+    },
+    {
+      "name": "makkii-dashboard", 
+      "size": 2000
     }
   ]
 }
